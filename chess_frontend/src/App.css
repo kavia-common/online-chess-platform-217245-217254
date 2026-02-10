@@ -1,104 +1,484 @@
-/* CSS Variables for Theme Management */
+/* Retro Chess Theme (global) */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --retro-bg: #0b1020;
+  --retro-surface: #101a33;
+  --retro-surface-2: #0f1730;
+  --retro-border: rgba(255, 255, 255, 0.12);
+  --retro-text: #e6eefc;
+  --retro-muted: rgba(230, 238, 252, 0.7);
+
+  /* Provided palette (style guide) */
+  --accent-primary: #3b82f6;
+  --accent-success: #06b6d4;
+  --accent-error: #ef4444;
+
+  /* Chessboard */
+  --sq-light: #d7d2b5;
+  --sq-dark: #6d7a5b;
+  --sq-light-hi: #f1e8b8;
+  --sq-dark-hi: #80956a;
+
+  --sq-select: rgba(59, 130, 246, 0.45);
+  --sq-legal: rgba(6, 182, 212, 0.35);
+  --sq-last: rgba(239, 68, 68, 0.25);
+
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --radius: 16px;
+
+  color-scheme: dark;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(
+      1200px 600px at 30% 10%,
+      rgba(59, 130, 246, 0.18),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 500px at 80% 30%,
+      rgba(6, 182, 212, 0.16),
+      transparent 55%
+    ),
+    var(--retro-bg);
+  color: var(--retro-text);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:focus-visible {
+  outline: 3px solid var(--accent-success);
+  outline-offset: 3px;
+  border-radius: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+.RetroApp {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  padding: 24px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.RetroShell {
+  width: min(1100px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.RetroHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 26, 51, 0.9),
+    rgba(16, 26, 51, 0.7)
+  );
+  border: 1px solid var(--retro-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.RetroTitle {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.6px;
+}
+
+.RetroSubtitle {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--retro-muted);
+}
+
+.RetroMain {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  align-items: start;
+}
+
+.RetroBoardPane {
+  min-width: 0;
+}
+
+.RetroBoardCard {
+  background: linear-gradient(
+    180deg,
+    rgba(16, 26, 51, 0.92),
+    rgba(16, 26, 51, 0.72)
+  );
+  border: 1px solid var(--retro-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.RetroHistoryPane {
+  background: linear-gradient(
+    180deg,
+    rgba(16, 26, 51, 0.9),
+    rgba(16, 26, 51, 0.65)
+  );
+  border: 1px solid var(--retro-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  min-height: 200px;
+}
+
+.RetroStatusRow {
+  width: 100%;
+  border-top: 1px dashed rgba(255, 255, 255, 0.18);
+  padding-top: 10px;
+  font-size: 13px;
+}
+
+.RetroStatusLabel {
+  color: rgba(230, 238, 252, 0.85);
+  font-weight: 700;
+}
+
+.RetroStatusText {
+  color: var(--retro-muted);
+}
+
+.RetroFooter {
+  text-align: center;
+  font-size: 12px;
+  color: var(--retro-muted);
+  padding: 4px 6px;
+}
+
+/* Buttons */
+.RetroBtnRow {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.RetroBtn {
+  appearance: none;
+  border: 1px solid var(--retro-border);
+  background: rgba(15, 23, 48, 0.9);
+  color: var(--retro-text);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 120ms ease, background 120ms ease, opacity 120ms ease;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.RetroBtn:hover {
+  transform: translateY(-1px);
+  background: rgba(20, 30, 60, 0.92);
 }
 
-.theme-toggle:active {
+.RetroBtn:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.RetroBtn--primary {
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.18) inset;
+}
+
+.RetroBtn--ghost {
+  opacity: 0.95;
+}
+
+.RetroBtn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .RetroMain {
+    grid-template-columns: 1fr;
   }
-  to {
-    transform: rotate(360deg);
+
+  .RetroHistoryPane {
+    order: 2;
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+/* Chess board visuals */
+.BoardWrap {
+  width: min(78vmin, 520px);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  user-select: none;
+}
+
+.Square {
+  display: grid;
+  place-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: clamp(26px, 4.8vmin, 42px);
+  line-height: 1;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: #0a0a0a;
+}
+
+.Square--light {
+  background: var(--sq-light);
+}
+.Square--dark {
+  background: var(--sq-dark);
+}
+
+.Square:hover.Square--light {
+  background: var(--sq-light-hi);
+}
+.Square:hover.Square--dark {
+  background: var(--sq-dark-hi);
+}
+
+.Square[disabled] {
+  cursor: default;
+  opacity: 0.92;
+}
+
+.Square__coords {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  color: rgba(0, 0, 0, 0.55);
+  bottom: 6px;
+  left: 6px;
+  pointer-events: none;
+}
+
+.Square__file {
+  top: 6px;
+  left: 6px;
+  bottom: auto;
+}
+
+.Square__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.Square--selected .Square__overlay {
+  background: var(--sq-select);
+}
+
+.Square--legal .Square__overlay {
+  background: var(--sq-legal);
+}
+
+.Square--last .Square__overlay {
+  background: var(--sq-last);
+}
+
+.Square__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.38);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.16);
+  position: absolute;
+}
+
+.Square--legal .Square__dot {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* Turn indicator */
+.TurnCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--retro-border);
+  background: rgba(15, 23, 48, 0.85);
+  min-width: 260px;
+  justify-content: space-between;
+}
+
+.TurnBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+}
+
+.TurnPip {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.16);
+}
+
+.TurnPip--black {
+  background: var(--accent-success);
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.16);
+}
+
+.TurnMeta {
+  font-size: 12px;
+  color: var(--retro-muted);
+  text-align: right;
+  max-width: 150px;
+}
+
+/* History */
+.HistoryTitle {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+}
+
+.HistoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: min(78vmin, 520px);
+  overflow: auto;
+  border-top: 1px dashed rgba(255, 255, 255, 0.16);
+  padding-top: 10px;
+}
+
+.HistoryRow {
+  display: grid;
+  grid-template-columns: 44px 1fr 1fr;
+  gap: 8px;
+  padding: 8px 8px;
+  border-radius: 10px;
+  align-items: center;
+}
+
+.HistoryRow:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.HistoryRow--active {
+  background: rgba(59, 130, 246, 0.14);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.HistoryMoveNo {
+  color: rgba(230, 238, 252, 0.75);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.HistoryBtn {
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--retro-text);
+  padding: 8px 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.HistoryBtn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.HistoryBtn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.HistoryEmpty {
+  color: var(--retro-muted);
+  font-size: 13px;
+}
+
+/* Promotion dialog */
+.DialogBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+  padding: 20px;
+}
+
+.DialogCard {
+  width: min(420px, 100%);
+  background: rgba(16, 26, 51, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+
+.DialogTitle {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.DialogText {
+  margin: 0 0 12px;
+  color: var(--retro-muted);
+  font-size: 13px;
+}
+
+.PromoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.PromoBtn {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  background: rgba(15, 23, 48, 0.95);
+  color: var(--retro-text);
+  padding: 12px 10px;
+  cursor: pointer;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  gap: 6px;
+}
+
+.PromoPiece {
+  font-size: 28px;
+}
+
+.PromoLabel {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.PromoBtn:hover {
+  background: rgba(20, 30, 60, 0.95);
 }

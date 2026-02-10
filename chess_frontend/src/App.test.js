@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders retro chess header and move history", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText(/Retro Chess/i)).toBeInTheDocument();
+  expect(screen.getByText(/Move History/i)).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /New Game/i })).toBeInTheDocument();
 });
